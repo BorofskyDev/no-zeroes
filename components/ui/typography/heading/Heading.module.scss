@@ -1,0 +1,27 @@
+@use '@/styles/abstracts' as *;
+
+.heading { 
+    &--page { 
+        @include heading-style(1);
+    }
+
+    &--section {
+        @include heading-style(2);
+    }
+
+    &--paragraph { 
+        @include heading-style(3);
+    }
+
+    &--card {
+        @include heading-style(4);
+    }
+
+    &--aside {
+        @include heading-style(5);
+    }
+
+    &--caption {
+        @include heading-style(6);
+    }
+}

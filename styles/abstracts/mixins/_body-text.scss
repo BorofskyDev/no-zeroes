@@ -1,0 +1,45 @@
+@mixin text(
+  $font-family: var(--font-atkinson-mono),
+  $font-size: var(--fs-300),
+  $line-height: var(--lh-300),
+  $font-weight: var(--fw-normal)
+) {
+  font-family: $font-family;
+  font-size: $font-size;
+  line-height: $line-height;
+  font-weight: $font-weight;
+  max-width: var(--container-app);
+}
+
+@mixin body-text($level) {
+  @if $level == 1 {
+    @include text;
+  }
+
+  @if $level == 2 {
+    @include text(
+      $font-size: var(--fs-400),
+      $line-height: var(--lh-400),
+      $font-weight: var(--fw-medium)
+    );
+  }
+
+  @if $level == 3 {
+    @include text(
+      $font-size: var(--fs-200),
+      $line-height: var(--lh-200),
+      $font-weight: var(--fw-light)
+    );
+  }
+
+  @if $level == 4 {
+    @include text($font-weight: var(--fw-medium));
+    text-transform: uppercase;
+    letter-spacing: var(--ls-100);
+  }
+
+  @if $level == 5 {
+    @include text;
+    font-style: italic;
+  }
+}

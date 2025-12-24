@@ -1,0 +1,23 @@
+@use '@/styles/abstracts' as *;
+
+.text {
+  &--body {
+    @include body-text(1);
+  }
+
+  &--lg {
+    @include body-text(2);
+  }
+
+  &--sm {
+    @include body-text(3);
+  }
+
+  &--lead {
+    @include body-text(4);
+  }
+
+  &--caption {
+    @include body-text(5);
+  }
+}

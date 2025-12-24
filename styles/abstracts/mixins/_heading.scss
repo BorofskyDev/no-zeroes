@@ -1,0 +1,73 @@
+@mixin heading(
+  $margin,
+  $weight,
+  $size,
+  $line-height,
+  $text-transform: capitalize
+) {
+  margin: $margin;
+  font-weight: $weight;
+  font-size: $size;
+  line-height: $line-height;
+  text-transform: $text-transform;
+}
+
+@mixin heading-style($level) {
+  @if $level == 1 {
+    @include heading(
+      var(--margin-6),
+      var(--fw-black),
+      var(--fs-900),
+      var(--lh-900),
+    );
+    min-width: 100%;
+    text-align: center;
+  }
+
+  @if $level == 2 {
+    @include heading(
+      var(--margin-5),
+      var(--fw-extrabold),
+      var(--fs-800),
+      var(--lh-800)
+    );
+    max-width: 100%;
+    text-align: center;
+  }
+
+  @if $level == 3 {
+    @include heading(
+      var(--margin-4),
+      var(--fw-bold),
+      var(--fs-700),
+      var(--lh-700)
+    );
+  }
+
+  @if $level == 4 {
+    @include heading(
+      var(--margin-3),
+      var(--fw-semibold),
+      var(--fs-600),
+      var(--lh-600)
+    );
+  }
+
+  @if $level == 5 {
+    @include heading(
+      var(--margin-2),
+      var(--fw-medium),
+      var(--fs-500),
+      var(--lh-500)
+    );
+  }
+
+  @if $level == 6 {
+    @include heading(
+      var(--margin-1),
+      var(--fw-medium),
+      var(--fs-400),
+      var(--lh-400)
+    );
+  }
+}
