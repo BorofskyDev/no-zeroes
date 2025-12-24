@@ -1,0 +1,25 @@
+@mixin focus-ring {
+outline: var(--border-4);
+      outline-offset: 4px;
+      outline-color: var(--color-focus);
+}
+
+@mixin focused {
+    &:focus-visible {
+        @include focus-ring;
+    }
+    
+    &:focus:not(:focus-visible) {
+        outline: none;
+        box-shadow: none;
+    }
+}
+
+@mixin visually-hidden {
+    position: absolute !important;
+    height: 1px; width: 1px;
+    overflow: hidden;
+    clip: rect(1px, 1px, 1px, 1px);
+    white-space: nowrap;
+  }
+  

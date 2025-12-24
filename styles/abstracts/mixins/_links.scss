@@ -1,0 +1,111 @@
+@use './accessibility' as *;
+
+@mixin link-base {
+  position: relative;
+  width: fit-content;
+  padding: #{px-to-em(8)} #{px-to-em(16)};
+  color: var(--text-link);
+  font-weight: var(--fw-bold);
+  transition: var(--transition-main);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--gap-3);
+  overflow: hidden;
+  @include focused;
+
+  &::before,
+  &::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 1px;
+    background-color: currentColor;
+    transition: var(--transition-main);
+  }
+
+  &::before {
+    bottom: 0;
+  }
+
+  &::after {
+    top: 0;
+    right: 110%;
+    opacity: 0;
+  }
+}
+
+@mixin link-hover($font-color) {
+  color: $font-color;
+
+  &::before,
+  &::after {
+    opacity: 1;
+    background-color: currentColor;
+  }
+
+  &::before {
+    left: 0;
+  }
+
+  &::after {
+    right: 0;
+  }
+}
+
+@mixin link-no-underline($hover-selector: '&:hover') {
+  @include link-base;
+
+  &::before {
+    left: 110%;
+    opacity: 0;
+  }
+}
+
+@mixin text-link($hover-selector: '&:hover') {
+  @include link-base;
+}
+
+@mixin btn-link($hover-selector: '&:hover') {
+  @include link-base;
+}
+
+@mixin button-link($padding) {
+    position: relative;
+  display: inline-block;
+  max-width: fit-content;
+  padding: $padding;
+  border: var(--border-1);
+  border-radius: var(--br-200);
+  background-color: transparent;
+  transition: var(--transition-main);
+  overflow: hidden;
+
+  &::after {
+    content: '';
+    position: absolute;
+    left: -100%;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: var(--br-200);
+    background-color: var(--color-primary);
+    transition: var(--transition-main);
+    z-index: -1;
+  }
+
+  &:hover {
+
+    &::after {
+        left: 0;
+    }
+    & .text {
+      @include link-hover(var(--bg1));
+    }
+  }
+
+  & .text {
+    @include focused;
+    @include btn-link;
+  }
+}

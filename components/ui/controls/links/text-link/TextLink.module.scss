@@ -1,0 +1,27 @@
+@use '@/styles/abstracts' as *;
+
+.textLink {
+  @include text-link;
+  & svg {
+    margin-left: #{px-to-rem(5)};
+    margin-bottom: #{px-to-rem(10)};
+    height: #{px-to-rem(16)};
+    width: #{px-to-rem(16)};
+    fill: var(--text-link);
+    stroke: var(--text-link);
+    transform: rotate(45deg);
+    transition: var(--transition-main);
+  }
+  &:hover {
+    @include link-hover(var(--text-link-hover));
+    & svg {
+      
+      fill: var(--text-link-hover);
+      stroke: var(--text-link-hover);
+    }
+  }
+}
+
+.noUnderline {
+  @include link-no-underline;
+}
