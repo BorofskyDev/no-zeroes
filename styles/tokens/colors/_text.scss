@@ -1,0 +1,14 @@
+:root {
+  --text: var(--color-text);
+  --text-alt: var(--color-bg1);
+  --text-primary: var(--color-primary);
+  --text-secondary: var(--color-secondary);
+  --text-accent: var(--color-accent);
+  --text-link: var(--color-primary);
+  --text-link-hover: var(--color-secondary);
+
+  --text-warning: var(--color-warning3);
+  --text-error: var(--color-warning3);
+  --text-success: var(--color-success3);
+  --text-caution: var(--color-caution3);
+}

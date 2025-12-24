@@ -1,0 +1,13 @@
+:root {
+  /* Body text */
+  --fs-200: clamp(0.875rem, 0.84rem + 0.2vw, 1rem);    // ~14–16px
+  --fs-300: clamp(1rem, 0.96rem + 0.2vw, 1.125rem);    // ~16–18px
+
+  /* Headings */
+  --fs-400: clamp(1.25rem, 1.2rem + 1vw, 3rem);        // ~20–48px
+  --fs-500: clamp(1.5rem, 1.4rem + 1.2vw, 4rem);       // ~24–64px
+  --fs-600: clamp(1.75rem, 1.6rem + 1.6vw, 5rem);      // ~28–80px
+  --fs-700: clamp(2rem, 1.8rem + 2vw, 6rem);           // ~32–96px
+  --fs-800: clamp(2.5rem, 2.2rem + 2.8vw, 7.5rem);     // ~40–120px
+  --fs-900: clamp(3rem, 2.5rem + 4vw, 9rem);           // ~48–144px
+}

@@ -1,0 +1,19 @@
+:root {
+  /* Micro gaps (inline elements, icons + text) */
+  --gap-1: var(--spacing-2);   /* 4px */
+  --gap-2: var(--spacing-3);   /* 6px */
+  --gap-3: var(--spacing-4);   /* 8px */
+
+  /* Default UI gaps */
+  --gap-4: var(--spacing-6);   /* 12px */
+  --gap-5: var(--spacing-8);   /* 16px */
+  --gap-6: var(--spacing-10);  /* 20px */
+  --gap-7: var(--spacing-12);  /* 24px */
+
+  /* Component-level gaps */
+  --gap-8: var(--spacing-14);  /* 32px */
+  --gap-9: var(--spacing-17);  /* 48px */
+
+  /* Section-level gaps */
+  --gap-10: var(--spacing-19); /* 64px */
+}

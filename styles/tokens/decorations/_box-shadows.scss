@@ -1,0 +1,16 @@
+:root {
+  /* Micro shadow (rare, subtle emphasis) */
+  --shadow-1: 1px 1px 0 0 var(--color-shadow);
+
+  /* Default neubrutal shadow */
+  --shadow-2: 2px 2px 0 0 var(--color-shadow);
+
+  /* Stronger emphasis (cards, panels) */
+  --shadow-3: 4px 4px 0 0 var(--color-shadow);
+
+  /* Heavy emphasis (modals, primary CTAs) */
+  --shadow-4: 6px 6px 0 0 var(--color-shadow);
+
+  /* Maximum brutality (use sparingly) */
+  --shadow-5: 8px 8px 0 0 var(--color-shadow);
+}

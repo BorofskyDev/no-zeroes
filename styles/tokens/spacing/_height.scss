@@ -1,0 +1,22 @@
+:root {
+  /* Control heights (thumb-friendly) */
+  --h-1: var(--spacing-18); /* 56px (primary button/input) */
+  --h-2: var(--spacing-19); /* 64px (large primary button) */
+  --h-3: var(--spacing-17); /* 48px (compact control) */
+  --h-4: var(--spacing-16); /* 40px (small control, use sparingly) */
+
+  /* Max heights for containers / sheets */
+  --max-h-sheet-sm: var(--spacing-32); /* 512px */
+  --max-h-sheet-md: var(--spacing-33); /* 576px */
+  --max-h-sheet-lg: var(--spacing-34); /* 640px */
+
+  /* Viewport helpers */
+  --h-vh: 100vh;
+  --h-dvh: 100dvh;
+
+  /* Semantic height aliases */
+  --h-control: var(--h-1);          /* 56px default control */
+  --h-control-lg: var(--h-2);       /* 64px */
+  --h-control-sm: var(--h-3);       /* 48px */
+  --max-h-modal: var(--max-h-sheet-md);
+}

@@ -1,0 +1,29 @@
+:root {
+  /* Fixed-ish widths (useful for cards, panels, stat blocks) */
+  --w-1: var(--spacing-25); /* 160px */
+  --w-2: var(--spacing-26); /* 192px */
+  --w-3: var(--spacing-27); /* 224px */
+  --w-4: var(--spacing-28); /* 256px */
+  --w-5: var(--spacing-29); /* 320px */
+  --w-6: var(--spacing-30); /* 384px */
+  --w-7: var(--spacing-31); /* 448px */
+  --w-8: var(--spacing-32); /* 512px */
+  --w-9: var(--spacing-33); /* 576px */
+  --w-10: var(--spacing-34); /* 640px */
+  --w-11: var(--spacing-35); /* 680px */
+
+  /* Max widths (your real bread & butter) */
+  --max-w-xs: var(--spacing-29);   /* 320px */
+  --max-w-sm: var(--spacing-30);   /* 384px */
+  --max-w-md: var(--spacing-31);   /* 448px */
+  --max-w-lg: var(--spacing-32);   /* 512px */
+  --max-w-xl: var(--spacing-33);   /* 576px */
+  --max-w-2xl: var(--spacing-34);  /* 640px */
+  --max-w-app: var(--spacing-35);  /* 680px */
+
+  /* Semantic width aliases */
+  --container-app: var(--max-w-app); /* 680px */
+  --container-page: var(--max-w-2xl); /* 640px */
+  --container-card: var(--max-w-lg); /* 512px */
+  --container-form: var(--max-w-md); /* 448px */
+}

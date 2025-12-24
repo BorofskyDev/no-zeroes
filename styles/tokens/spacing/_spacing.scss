@@ -1,0 +1,46 @@
+@use '@/styles/abstracts' as *;
+
+:root {
+  --spacing-0: 0rem;
+  --spacing-1: #{px-to-rem(2)};
+  --spacing-2: #{px-to-rem(4)};
+  --spacing-3: #{px-to-rem(6)};
+  --spacing-4: #{px-to-rem(8)};
+  --spacing-5: #{px-to-rem(10)};
+  --spacing-6: #{px-to-rem(12)};
+  --spacing-7: #{px-to-rem(14)};
+  --spacing-8: #{px-to-rem(16)};
+  --spacing-9: #{px-to-rem(18)};
+  --spacing-10: #{px-to-rem(20)};
+  --spacing-11: #{px-to-rem(22)};
+  --spacing-12: #{px-to-rem(24)};
+  --spacing-13: #{px-to-rem(28)};
+  --spacing-14: #{px-to-rem(32)};
+  --spacing-15: #{px-to-rem(36)};
+  --spacing-16: #{px-to-rem(40)};
+  --spacing-17: #{px-to-rem(48)};
+  --spacing-18: #{px-to-rem(56)};
+  --spacing-19: #{px-to-rem(64)};
+
+  /* Section + component spacing */
+  --spacing-20: #{px-to-rem(72)};
+  --spacing-21: #{px-to-rem(80)};
+  --spacing-22: #{px-to-rem(96)};
+  --spacing-23: #{px-to-rem(112)};
+  --spacing-24: #{px-to-rem(128)};
+
+  /* Card / container widths */
+  --spacing-25: #{px-to-rem(160)};
+  --spacing-26: #{px-to-rem(192)};
+  --spacing-27: #{px-to-rem(224)};
+  --spacing-28: #{px-to-rem(256)};
+  --spacing-29: #{px-to-rem(320)};
+
+  /* Page-level widths */
+  --spacing-30: #{px-to-rem(384)};
+  --spacing-31: #{px-to-rem(448)};
+  --spacing-32: #{px-to-rem(512)};
+  --spacing-33: #{px-to-rem(576)};
+  --spacing-34: #{px-to-rem(640)};
+  --spacing-35: #{px-to-rem(680)};
+}

@@ -1,0 +1,8 @@
+@use '@/styles/abstracts' as *;
+
+:root {
+  --ls-100: #{px-to-ch(1)};
+  --ls-200: #{px-to-ch(2)};
+  --ls-300: #{px-to-ch(3)};
+  --ls-400: #{px-to-ch(4)};
+}
