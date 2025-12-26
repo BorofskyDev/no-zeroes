@@ -1,7 +1,7 @@
 
 
 import { ButtonHTMLAttributes, ReactNode } from 'react'
-import styles from './PrimaryBtn.module.scss'
+import styles from './Button.module.scss'
 import clsx from 'clsx'
 
 type Variant =

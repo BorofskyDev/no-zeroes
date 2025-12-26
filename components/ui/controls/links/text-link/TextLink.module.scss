@@ -1,4 +1,4 @@
-@use '@/styles/abstracts' as *;
+@use './text-link-mixin.scss' as *;
 
 .textLink {
   @include text-link;
