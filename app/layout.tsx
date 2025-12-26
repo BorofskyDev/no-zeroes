@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Atkinson_Hyperlegible_Mono} from "next/font/google";
 import '@/styles/globals.scss'
+import { Header } from "@/components";
 
 const atkinsonMono = Atkinson_Hyperlegible_Mono({
   subsets: ["latin"],
@@ -21,6 +22,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${atkinsonMono.variable}`} suppressHydrationWarning>
+        <Header />
         {children}
       </body>
     </html>

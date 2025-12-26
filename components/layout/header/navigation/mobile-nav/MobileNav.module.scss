@@ -1,0 +1,17 @@
+@use '@/styles/base/flex' as *;
+
+.mobileNav {
+  position: fixed;
+  inset: 0;
+  background-color: var(--bg1);
+  display: grid;
+  place-items: center;
+  z-index: 40;
+
+  & .links {
+    @include flex-center-column(var(--gap-8));
+    text-align: center;
+  }
+
+
+}

@@ -1,0 +1,15 @@
+@use '@/styles/base/flex' as *;
+
+.hamburgerMenu {
+    position: relative;
+    @include flex-center-column(2px);
+    z-index: 50;
+  
+    & span {
+      width: 32px;
+      height: 2px;
+      background-color: var(--bg-primary);
+    }
+  
+    
+  }

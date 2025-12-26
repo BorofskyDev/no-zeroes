@@ -13,3 +13,10 @@
     justify-content: center;
     gap: $gap;
 }
+
+@mixin flex-center-row($gap) {
+    @include flex;
+    align-items: center;
+    justify-content: center;
+    gap: $gap;
+}
