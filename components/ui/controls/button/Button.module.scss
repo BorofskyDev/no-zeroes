@@ -1,0 +1,27 @@
+@use './button-mixin.scss' as *;
+
+.primaryBtn {
+  &--primary {
+    @include btn(1);
+  }
+
+  &--secondary {
+    @include btn(2);
+  }
+
+  &--caution {
+    @include btn(3);
+  }
+
+  &--delete {
+    @include btn(4);
+  }
+
+  &--disabled {
+    @include btn(5);
+  }
+
+  &--small {
+    @include btn(6);
+  }
+}

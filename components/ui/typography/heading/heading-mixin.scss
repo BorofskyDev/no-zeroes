@@ -22,6 +22,7 @@
     );
     min-width: 100%;
     text-align: center;
+    color: var(--text-primary);
   }
 
   @if $level == 2 {

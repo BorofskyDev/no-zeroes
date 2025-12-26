@@ -5,24 +5,27 @@ import {
   PrimaryBtn,
   TextLink,
 } from '@/components/ui'
+import { ColumnSectionContainer, PageContainer } from '@/components/layout'
 import styles from './LoginPageComponent.module.scss'
 
 export const LoginPageComponent = () => {
   return (
-    <main className={styles.loginPage}>
-      <section id='main' className={styles.content}>
-        <Heading as='h1' size='page'>
-          No Zer0s
-        </Heading>
-        <BodyText variant='lg'>Every Ask Counts</BodyText>
-        <BodyText>
-          No Zer0s is a simple activity tracker for recording when yhou ask. It
-          focuses on effort, not outcome. Log each time you ask, record what
-          happened, and see your own progress over time.{' '}
-        </BodyText>
-      </section>
-      <section id='login-form' className={styles.loginForm}>
-        <form>
+    <PageContainer className={styles.loginPage}>
+      <ColumnSectionContainer id='info-section'>
+        <div className={styles.heading}>
+          <Heading as='h1' size='page'>
+            No Zer0s
+          </Heading>
+          <BodyText variant='lg'>every ask counts</BodyText>
+          <BodyText>
+            No Zer0s is a simple activity tracker for recording when yhou ask.
+            It focuses on effort, not outcome. Log each time you ask, record
+            what happened, and see your own progress over time.{' '}
+          </BodyText>
+        </div>
+      </ColumnSectionContainer>
+      <ColumnSectionContainer id='login'>
+        <form className={styles.loginForm}>
           <Heading as='h2' size='section'>
             Login
           </Heading>
@@ -32,7 +35,7 @@ export const LoginPageComponent = () => {
             <InputGroup label='Password' name='password' required />
           </div>
 
-          <PrimaryBtn type='submit'> Sign In</PrimaryBtn>
+          <PrimaryBtn className={styles.submitBtn} type='submit'> Sign In</PrimaryBtn>
         </form>
         <div className={styles.divider}>
           <span>
@@ -42,15 +45,15 @@ export const LoginPageComponent = () => {
         <PrimaryBtn variant='secondary' type='button'>
           Sign in with Google
         </PrimaryBtn>
-      </section>
-      <section id='forgot-password' className={styles.loginFooter}>
+      </ColumnSectionContainer>
+      <ColumnSectionContainer id='forgot-password'>
         <TextLink href='/forgot-password'>Forgot Password?</TextLink>
 
         <BodyText variant='sm'>
           No Zer0s is an invite-only app. Please contact your management for
           registration.
         </BodyText>
-      </section>
-    </main>
+      </ColumnSectionContainer>
+    </PageContainer>
   )
 }

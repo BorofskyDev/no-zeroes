@@ -1,0 +1,15 @@
+@mixin flex {
+    display: flex;
+}
+
+@mixin flex-column {
+    @include flex;
+    flex-direction: column;
+}
+
+@mixin flex-center-column($gap) {
+    @include flex-column;
+    align-items: center;
+    justify-content: center;
+    gap: $gap;
+}

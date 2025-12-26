@@ -1,0 +1,63 @@
+@use '@/styles/base/accessibility/' as *;
+@use '@/styles/base/flex' as *;
+
+.inputGroup {
+  width: 100%;
+  @include flex-center-column(var(--gap-3));
+//   align-items: flex-start;
+
+  &.inputGroupError {
+    background-color: var(--color-warning-4);
+  }
+
+  /* Variant modifiers */
+  &.inputGroup-text {
+  }
+
+  &.inputGroup-email {
+  }
+
+  &.inputGroup-password {
+  }
+
+  &.inputGroup-number {
+  }
+
+  /* Label */
+  .label {
+  }
+
+  /* Field wrapper (for input, icons, etc.) */
+  .fieldWrapper {
+    .input {
+      padding: var(--pad-2) var(--pad-4);
+      border: var(--border-1);
+      border-radius: var(--br-200);
+      box-shadow: var(--shadow-2);
+      background-color: var(--bg2);
+      transition: var(--transition-main);
+
+      &:focus {
+        @include focused;
+        box-shadow: var(--shadow-4);
+      }
+
+      &:disabled {
+        box-shadow: none;
+        background-color: var(--color-disabled-2);
+        cursor: not-allowed;
+      }
+
+      &[aria-invalid='true'] {
+      }
+    }
+  }
+
+  /* Help text */
+  .helpText {
+  }
+
+  /* Error text */
+  .errorText {
+  }
+}

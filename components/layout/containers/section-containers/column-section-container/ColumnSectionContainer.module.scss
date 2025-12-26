@@ -1,0 +1,6 @@
+@use '@/styles/base/flex' as *;
+
+.columnSectionContainer {
+    @include flex-center-column(var(--gap-10));
+    
+}

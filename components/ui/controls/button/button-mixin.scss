@@ -1,0 +1,152 @@
+@use '@/styles/base/accessibility/' as *;
+
+@mixin button(
+  $padding,
+  $border,
+  $border-radius,
+  $bg1,
+  $font-weight,
+  $font-size,
+  $font-color1,
+  $bg2,
+  $font-color2,
+  //   $hover-font
+) {
+  position: relative;
+  padding: $padding;
+  border: $border;
+  border-radius: $border-radius;
+  box-shadow: var(--shadow-4);
+  background-color: transparent;
+  font-size: $font-size;
+  font-weight: $font-weight;
+  color: $font-color1;
+  transition: var(--transition-main);
+  cursor: pointer;
+  overflow: hidden;
+
+  @include focused;
+
+  &::before,
+  &::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: $border-radius;
+    z-index: -1;
+    transition: var(--transition-main);
+  }
+
+  &::before {
+    top: 0;
+    background-color: $bg1;
+    transition-delay: 0.1s;
+  }
+
+  &::after {
+    top: 100%;
+    background-color: $bg2;
+  }
+
+  &:hover {
+    color: $font-color2;
+    &::before {
+      top: -125%;
+    }
+
+    &::after {
+      top: 0;
+    }
+  }
+}
+
+@mixin btn($level) {
+  @if $level == 1 {
+    @include button(
+      $padding: var(--pad-2) var(--pad-5),
+      $border: var(--border-1),
+      $border-radius: var(--br-200),
+      $bg1: var(--color-primary),
+      $font-weight: var(--fw-bold),
+      $font-size: var(--fs-600),
+      $font-color1: var(--bg1),
+      $bg2: var(--color-secondary),
+      $font-color2: var(--bg1)
+    );
+    text-transform: capitalize;
+  }
+
+  @if $level == 2 {
+    @include button(
+      $padding: var(--pad-2) var(--pad-3),
+      $border: var(--border-1),
+      $border-radius: var(--br-400),
+      $bg1: var(--bg3),
+      $font-weight: var(--fw-bold),
+      $font-size: var(--fs-500),
+      $font-color1: var(--text-accent),
+      $bg2: var(--color-accent),
+      $font-color2: var(--bg1)
+    );
+    text-transform: capitalize;
+  }
+
+  @if $level == 3 {
+    @include button(
+      $padding: var(--btn-padding-2),
+      $border: var(--border-caution),
+      $border-radius: var(--br-600),
+      $bg1: var(--color-caution1),
+      $font-weight: var(--fw-bold),
+      $font-size: var(--fs-400),
+      $font-color1: var(--text-caution),
+      $bg2: var(--color-caution2),
+      $font-color2: var(--text-caution)
+    );
+  }
+
+  @if $level == 4 {
+    @include button(
+      $padding: var(--btn-padding-2),
+      $border: var(--border-warning),
+      $border-radius: var(--br-600),
+      $bg1: var(--color-warning1),
+      $font-weight: var(--fw-bold),
+      $font-size: var(--fs-400),
+      $font-color1: var(--text-warning),
+      $bg2: var(--color-warning2),
+      $font-color2: var(--text-warning)
+    );
+  }
+
+  @if $level == 5 {
+    @include button(
+      $padding: var(--btn-padding-2),
+      $border: none,
+      $border-radius: var(--br-600),
+      $bg1: var(--color-disabled-1),
+      $font-weight: var(--fw-bold),
+      $font-size: var(--fs-400),
+      $font-color1: var(--color-disabled-2),
+      $bg2: var(--color-disabled-1),
+      $font-color2: var(--color-disabled-2)
+    );
+    cursor: not-allowed;
+  }
+
+  @if $level == 6 {
+       @include button(
+      $padding: var(--btn-padding-3),
+      $border: var(--border-1),
+      $border-radius: var(--br-400),
+      $bg1: var(--color-primary),
+      $font-weight: var(--fw-bold),
+      $font-size: var(--fs-400),
+      $font-color1: var(--bg1),
+      $bg2: var(--color-secondary),
+      $font-color2: var(--bg1)
+    );
+  }
+}
