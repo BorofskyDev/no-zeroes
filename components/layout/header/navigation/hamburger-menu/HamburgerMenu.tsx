@@ -19,7 +19,7 @@ export function HamburgerMenu({
       aria-label='Toggle menu'
     >
       <motion.span
-        animate={isOpen ? { rotate: 45, y: 6 } : { rotate: 0, y: 0 }}
+        animate={isOpen ? { rotate: 45, y: 8 } : { rotate: 0, y: 0 }}
         transition={{ duration: 0.2 }}
       />
       <motion.span
@@ -27,7 +27,7 @@ export function HamburgerMenu({
         transition={{ duration: 0.2 }}
       />
       <motion.span
-        animate={isOpen ? { rotate: -45, y: -3 } : { rotate: 0, y: 0 }}
+        animate={isOpen ? { rotate: -45, y: -8 } : { rotate: 0, y: 0 }}
         transition={{ duration: 0.2 }}
       />
     </button>
