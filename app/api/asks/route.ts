@@ -21,6 +21,59 @@ function mapCardStatus(v: Body['cardStatus']) {
   return v === 'hasCard' ? 'HAS_CARD' : 'NO_CARD'
 }
 
+function getBearerToken(req: Request) {
+  const h = req.headers.get('authorization') || req.headers.get('Authorization')
+  if (!h?.startsWith('Bearer ')) return null
+  return h.slice('Bearer '.length).trim()
+}
+
+export async function GET(req: Request) {
+  try {
+    const token = getBearerToken(req)
+    if (!token) {
+      return NextResponse.json(
+        { ok: false, error: 'Unauthorized' },
+        { status: 401 }
+      )
+    }
+
+    const decoded = await adminAuth.verifyIdToken(token)
+    const firebaseUid = decoded.uid
+
+    const user = await prisma.user.findUnique({
+      where: { firebaseUid },
+      select: { id: true },
+    })
+
+    if (!user) {
+      return NextResponse.json(
+        { ok: false, error: 'User not found' },
+        { status: 404 }
+      )
+    }
+
+    const asks = await prisma.ask.findMany({
+      where: { userId: user.id },
+      orderBy: { createdAt: 'desc' },
+      take: 100,
+      select: {
+        id: true,
+        flowType: true,
+        didAsk: true,
+        cardStatus: true,
+        createdAt: true,
+      },
+    })
+
+    return NextResponse.json({ ok: true, asks })
+  } catch (err: unknown) {
+    return NextResponse.json(
+      { ok: false, error: err instanceof Error ? err.message : 'Unknown error' },
+      { status: 500 }
+    )
+  }
+}
+
 export async function POST(req: Request) {
   try {
     const authHeader =

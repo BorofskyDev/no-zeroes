@@ -1,7 +1,7 @@
 'use client'
 
 import { useState} from 'react'
-import { Heading, IAskedModal, PageContainer, PrimaryBtn} from '@/components'
+import { AskList, Heading, IAskedModal, PageContainer, PrimaryBtn} from '@/components'
 import styles from './Dashboard.module.scss'
 
 export const Dashboard = () => { 
@@ -15,7 +15,7 @@ export const Dashboard = () => {
         <IAskedModal isOpen={isIAskedOpen} onClose={() => setIsIAskedOpen(false)} />
 
 
-            {/* Editable entries */}
+            <AskList />
 
             {/* Leaderboard */}
 

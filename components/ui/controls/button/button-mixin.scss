@@ -110,7 +110,7 @@
 
   @if $level == 4 {
     @include button(
-      $padding: var(--btn-padding-2),
+      $padding: var(--pad-1) var(--pad-3),
       $border: var(--border-warning),
       $border-radius: var(--br-600),
       $bg1: var(--color-warning1),
