@@ -13,7 +13,7 @@
     }
 }
 
- .footer {
+.footer {
     @include flex-center-column(var(--gap-8));
     flex-direction: column-reverse;
 }

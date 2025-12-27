@@ -29,7 +29,7 @@
 }
 
 .panel {
-  min-width: var(--container-page);
+  max-width: var(--container-page);
   min-height: var(--max-h-modal);
   overflow: auto;
   background-color: var(--surface);

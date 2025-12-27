@@ -25,6 +25,12 @@ const initialState: IAskedState = {
   cardStatus: null,
 }
 
+export type IAskedPayload = {
+  flowType: FlowType | null
+  didAsk: YesNo | null
+  cardStatus: CardStatus | null
+}
+
 export const useIAskedFlow = () => {
   const [state, setState] = useState<IAskedState>(initialState)
 
@@ -48,6 +54,9 @@ export const useIAskedFlow = () => {
     setState((prev) => ({
       ...prev,
       flowType,
+      // flow change invalidates downstream answers
+      didAsk: null,
+      cardStatus: null,
       direction: 1,
       step: 'didYouAsk',
     }))
@@ -56,7 +65,7 @@ export const useIAskedFlow = () => {
   const setDidAsk = useCallback((didAsk: YesNo) => {
     setState((prev) => {
       if (didAsk === 'yes') {
-        // Clear downstream branch state
+        // If YES, cardStatus is irrelevant
         return {
           ...prev,
           didAsk,
@@ -66,6 +75,7 @@ export const useIAskedFlow = () => {
         }
       }
 
+      // If NO, go to card status step
       return {
         ...prev,
         didAsk,
@@ -86,12 +96,38 @@ export const useIAskedFlow = () => {
 
   const goBack = useCallback(() => {
     setState((prev) => {
+      // Compute next step
       let nextStep: Step = prev.step
 
       if (prev.step === 'didYouAsk') nextStep = 'chooseFlow'
       else if (prev.step === 'cardStatus') nextStep = 'didYouAsk'
       else if (prev.step === 'review') {
         nextStep = prev.didAsk === 'no' ? 'cardStatus' : 'didYouAsk'
+      }
+
+      // Optional cleanup when going back:
+      // - If we go back from cardStatus to didYouAsk, cardStatus can remain (harmless),
+      //   but clearing it prevents stale UI in review if user flips to YES later.
+      // - If we go back to chooseFlow, clear everything below flowType.
+      if (nextStep === 'chooseFlow') {
+        return {
+          ...prev,
+          step: nextStep,
+          direction: -1,
+          flowType: null,
+          didAsk: null,
+          cardStatus: null,
+        }
+      }
+
+      if (nextStep === 'didYouAsk') {
+        return {
+          ...prev,
+          step: nextStep,
+          direction: -1,
+          // keep flowType, but clear downstream cardStatus to avoid stale branch data
+          cardStatus: null,
+        }
       }
 
       return {
@@ -119,17 +155,17 @@ export const useIAskedFlow = () => {
     return true
   }, [state.flowType, state.didAsk, state.cardStatus])
 
-  const payload = useMemo(() => {
+  // ✅ DB-friendly payload: no timestamps
+  const payload: IAskedPayload = useMemo(() => {
     return {
       flowType: state.flowType,
       didAsk: state.didAsk,
       cardStatus: state.didAsk === 'no' ? state.cardStatus : null,
-      createdAt: new Date().toISOString(),
     }
   }, [state.flowType, state.didAsk, state.cardStatus])
 
   return {
-    state, // includes direction for framer-motion
+    state,
     canGoBack,
     isValid,
     payload,

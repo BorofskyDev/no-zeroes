@@ -14,16 +14,54 @@ datasource db {
 }
 
 model User {
-  id        String   @id @default(cuid())
+  id          String @id @default(cuid())
   firebaseUid String @unique
 
-  email     String?  @unique
-  firstName      String?
-  lastName       String?
-  role      Role     @default(USER)
+  email     String? @unique
+  firstName String?
+  lastName  String?
+  role      Role    @default(USER)
+
+  // ✅ relation: one user has many Ask entries
+  asks Ask[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+}
+
+model Ask {
+  id String @id @default(cuid())
+
+  // ✅ relation to user
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  // ✅ core fields from your wizard
+  flowType   AskFlowType
+  didAsk     YesNo
+  cardStatus CardStatus? // only meaningful when didAsk = NO
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([userId])
+  @@index([createdAt])
+  @@index([userId, createdAt])
+}
+
+enum AskFlowType {
+  PERSONAL
+  BUSINESS
+}
+
+enum YesNo {
+  YES
+  NO
+}
+
+enum CardStatus {
+  HAS_CARD
+  NO_CARD
 }
 
 enum Role {
