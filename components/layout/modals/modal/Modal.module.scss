@@ -1,0 +1,101 @@
+@use '@/styles/base/flex' as *;
+
+.root {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+}
+
+.viewport {
+  position: fixed;
+  inset: 0;
+}
+
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+}
+
+.centerWrap {
+  position: fixed;
+  inset: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 1.25rem;
+}
+
+.panel {
+  min-width: var(--container-page);
+  min-height: var(--max-h-modal);
+  overflow: auto;
+  background-color: var(--surface);
+  color: var(--text);
+  border-radius: var(--br-200);
+  border: var(--border-4);
+  box-shadow: var(--shadow-5);
+  
+}
+
+.panel_sm { max-width: 420px; }
+.panel_md { max-width: 560px; }
+.panel_lg { max-width: 760px; }
+.panel_xl { max-width: 980px; }
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 1rem 1rem 0.75rem 1rem;
+}
+
+.title {
+  font-size: 1.1rem;
+  font-weight: 700;
+}
+
+.closeBtn {
+  appearance: none;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+
+  display: grid;
+  place-items: center;
+
+  font-size: 28px;
+  line-height: 1;
+
+  &:focus-visible {
+    outline: 3px solid rgba(0, 0, 0, 0.9);
+    outline-offset: 2px;
+  }
+
+  &:hover {
+    background: rgba(0, 0, 0, 0.06);
+  }
+}
+
+.body {
+  padding: 0 1rem 1rem 1rem;
+}
+
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}

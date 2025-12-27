@@ -1,0 +1,1 @@
+export { IAskedModal } from './IAskedModal'

@@ -11,6 +11,7 @@ type Variant =
   | 'delete'
   | 'disabled'
   | 'small'
+  | 'tertiary'
 
 interface PrimaryBtnProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: Variant

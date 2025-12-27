@@ -24,4 +24,8 @@
   &--small {
     @include btn(6);
   }
+
+  &--tertiary {
+    @include btn(7);
+  }
 }

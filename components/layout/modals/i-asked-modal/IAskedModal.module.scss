@@ -1,0 +1,15 @@
+@use '@/styles/base/flex' as *;
+
+
+.wrap {
+@include flex-center-column(var(--gap-6));
+
+& .step {
+    @include flex-center-column(var(--gap-4));
+    text-align: center;
+
+    & .actions {
+        @include flex-center-column(var(--gap-8));
+    }
+}
+}
