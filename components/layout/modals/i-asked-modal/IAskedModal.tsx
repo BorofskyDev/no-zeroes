@@ -1,212 +1,187 @@
 'use client'
 
-import { useMemo, useState } from 'react'
-import { Modal, PrimaryBtn, Heading } from '@/components'
+import { useCallback, useMemo } from 'react'
+import { Modal, PrimaryBtn } from '@/components'
+import { WizardStep } from './components'
+import { useIAskedFlow } from './useIAskedFlow'
 import styles from './IAskedModal.module.scss'
+import { AnimatePresence, motion } from 'framer-motion'
 
-type IAskedModalProps = {
-  isOpen: boolean
-  onClose: () => void
+interface IAskedModalProps {
+    isOpen: boolean
+    onClose: () => void
 }
 
-type FlowType = 'personal' | 'business'
-type YesNo = 'yes' | 'no'
-type CardStatus = 'hasCard' | 'noCard'
-
-type Step = 'chooseFlow' | 'didYouAsk' | 'cardStatus' | 'review' // optional (or go straight to submit)
+const slideVariants = {
+  enter: (direction: 1 | -1) => ({
+    x: direction === 1 ? 40 : -40,
+    opacity: 0,
+    position: 'absolute' as const,
+    width: '100%',
+  }),
+  center: {
+    x: 0,
+    opacity: 1,
+    position: 'relative' as const,
+    width: '100%',
+  },
+  exit: (direction: 1 | -1) => ({
+    x: direction === 1 ? -40 : 40,
+    opacity: 0,
+    position: 'absolute' as const,
+    width: '100%',
+  }),
+}
 
 export const IAskedModal = ({ isOpen, onClose }: IAskedModalProps) => {
-  const [step, setStep] = useState<Step>('chooseFlow')
+  const { state, canGoBack, isValid, payload, actions } = useIAskedFlow()
 
-  const [flowType, setFlowType] = useState<FlowType | null>(null)
-  const [didAsk, setDidAsk] = useState<YesNo | null>(null)
-  const [cardStatus, setCardStatus] = useState<CardStatus | null>(null)
-
-  const canGoBack = useMemo(() => step !== 'chooseFlow', [step])
-
-  const reset = () => {
-    setStep('chooseFlow')
-    setFlowType(null)
-    setDidAsk(null)
-    setCardStatus(null)
-  }
-
-  const handleClose = () => {
+  const handleClose = useCallback(() => {
     onClose()
-    reset()
-  }
+    actions.reset()
+  }, [onClose, actions])
 
-  const goBack = () => {
-    if (step === 'didYouAsk') setStep('chooseFlow')
-    else if (step === 'cardStatus') setStep('didYouAsk')
-    else if (step === 'review') setStep('cardStatus')
-  }
+  const handleSubmit = useCallback(async () => {
+    // await fetch(...payload)
+    handleClose()
+  }, [payload, handleClose])
 
-  const handleSubmit = async () => {
-    // build payload from state
-    const payload = {
-      flowType,
-      didAsk,
-      cardStatus: didAsk === 'no' ? cardStatus : null,
-      createdAt: new Date().toISOString(),
+  const stepNode = useMemo(() => {
+    const common = {
+      showBack: canGoBack,
+      onBack: actions.goBack,
     }
 
-    // TODO: call your API route here
-    // await fetch('/api/ask', { method:'POST', body: JSON.stringify(payload) ... })
-
-    handleClose()
-  }
-
-  return (
-    <Modal isOpen={isOpen} onClose={handleClose} title='I asked'>
-      <div className={styles.wrap}>
-        {step === 'chooseFlow' && (
-          <section className={styles.step}>
-            <Heading as='h2' size='card'>
-              Personal or business?
-            </Heading>
-
-            <div className={styles.actions}>
-              <PrimaryBtn
-                variant='primary'
-                onClick={() => {
-                  setFlowType('personal')
-                  setStep('didYouAsk')
-                }}
-              >
-                Personal
-              </PrimaryBtn>
-
-              <PrimaryBtn
-                variant='primary'
-                onClick={() => {
-                  setFlowType('business')
-                  setStep('didYouAsk')
-                }}
-              >
-                Business
-              </PrimaryBtn>
-            </div>
-          </section>
-        )}
-
-        {step === 'didYouAsk' && (
-          <section className={styles.step}>
-            <Heading as='h2' size='card'>
-              Their Response?
-            </Heading>
-
-            <div className={styles.actions}>
-              <PrimaryBtn
-                variant='primary'
-                onClick={() => {
-                  setDidAsk('yes')
-                  setStep('review') // or submit immediately
-                }}
-              >
-                Yes
-              </PrimaryBtn>
-
-              <PrimaryBtn
-                variant='secondary'
-                onClick={() => {
-                  setDidAsk('no')
-                  setStep('cardStatus')
-                }}
-              >
-                No
-              </PrimaryBtn>
-            </div>
-
-            <div className={styles.navRow}>
-              {canGoBack && (
+    switch (state.step) {
+      case 'chooseFlow':
+        return (
+          <WizardStep
+            title='Personal or business?'
+            actions={
+              <>
                 <PrimaryBtn
-                  type='button'
-                  className={styles.backBtn}
-                  onClick={goBack}
-                  variant='tertiary'
+                  variant='primary'
+                  onClick={() => actions.setFlowType('personal')}
                 >
-                  Back
+                  Personal
                 </PrimaryBtn>
-              )}
-            </div>
-          </section>
-        )}
+                <PrimaryBtn
+                  variant='primary'
+                  onClick={() => actions.setFlowType('business')}
+                >
+                  Business
+                </PrimaryBtn>
+              </>
+            }
+          />
+        )
 
-        {step === 'cardStatus' && (
-          <section className={styles.step}>
-            <Heading as='h2' size='card'>
-              Do they currently have a card?
-            </Heading>
+      case 'didYouAsk':
+        return (
+          <WizardStep
+            title='Their response?'
+            {...common}
+            actions={
+              <>
+                <PrimaryBtn
+                  variant='primary'
+                  onClick={() => actions.setDidAsk('yes')}
+                >
+                  Yes
+                </PrimaryBtn>
+                <PrimaryBtn
+                  variant='secondary'
+                  onClick={() => actions.setDidAsk('no')}
+                >
+                  No
+                </PrimaryBtn>
+              </>
+            }
+          />
+        )
 
-            <div className={styles.actions}>
-              <PrimaryBtn
-                variant='primary'
-                onClick={() => {
-                  setCardStatus('hasCard')
-                  setStep('review')
-                }}
-              >
-                Yes
-              </PrimaryBtn>
+      case 'cardStatus':
+        return (
+          <WizardStep
+            title='Do they currently have a card?'
+            {...common}
+            actions={
+              <>
+                <PrimaryBtn
+                  variant='primary'
+                  onClick={() => actions.setCardStatus('hasCard')}
+                >
+                  Yes
+                </PrimaryBtn>
+                <PrimaryBtn
+                  variant='secondary'
+                  onClick={() => actions.setCardStatus('noCard')}
+                >
+                  No
+                </PrimaryBtn>
+              </>
+            }
+          />
+        )
 
-              <PrimaryBtn
-                variant='secondary'
-                onClick={() => {
-                  setCardStatus('noCard')
-                  setStep('review')
-                }}
-              >
-                No 
-              </PrimaryBtn>
-            </div>
-
-            <div className={styles.navRow}>
-              <button type='button' className={styles.backBtn} onClick={goBack}>
-                Back
-              </button>
-            </div>
-          </section>
-        )}
-
-        {step === 'review' && (
-          <section className={styles.step}>
-            <Heading as='h2' size='section'>
-              Review
-            </Heading>
-
-            <div className={styles.summary}>
-              <div>
-                <strong>Type:</strong> {flowType ?? '-'}
-              </div>
-              <div>
-                <strong>Asked:</strong> {didAsk ?? '-'}
-              </div>
-              {didAsk === 'no' && (
+      case 'review':
+        return (
+          <WizardStep
+            title='Review'
+            titleSize='section'
+            {...common}
+            actions={
+              <div className={styles.summary}>
                 <div>
-                  <strong>Card:</strong> {cardStatus ?? '-'}
+                  <strong>Type:</strong> {state.flowType ?? '-'}
                 </div>
-              )}
-            </div>
-
-            <div className={styles.footer}>
-              <button type='button' className={styles.backBtn} onClick={goBack}>
-                Back
-              </button>
-
+                <div>
+                  <strong>Asked:</strong> {state.didAsk ?? '-'}
+                </div>
+                {state.didAsk === 'no' ? (
+                  <div>
+                    <strong>Card:</strong> {state.cardStatus ?? '-'}
+                  </div>
+                ) : null}
+              </div>
+            }
+            footer={
               <PrimaryBtn
                 variant='primary'
                 onClick={handleSubmit}
-                // basic validation:
-                disabled={
-                  !flowType || !didAsk || (didAsk === 'no' && !cardStatus)
-                }
+                disabled={!isValid}
               >
                 Submit
               </PrimaryBtn>
-            </div>
-          </section>
-        )}
+            }
+          />
+        )
+      default:
+        return null
+    }
+  }, [state, canGoBack, actions, handleSubmit, isValid])
+
+  return (
+    <Modal isOpen={isOpen} onClose={handleClose} title='I asked'>
+      {/* this wrapper is important: lets outgoing/entering steps overlap */}
+      <div className={styles.animWrap}>
+        <AnimatePresence
+          initial={false}
+          custom={state.direction}
+          mode='popLayout'
+        >
+          <motion.div
+            key={state.step}
+            custom={state.direction}
+            variants={slideVariants}
+            initial='enter'
+            animate='center'
+            exit='exit'
+            transition={{ duration: 0.22, ease: 'easeOut' }}
+          >
+            <div className={styles.wrap}>{stepNode}</div>
+          </motion.div>
+        </AnimatePresence>
       </div>
     </Modal>
   )

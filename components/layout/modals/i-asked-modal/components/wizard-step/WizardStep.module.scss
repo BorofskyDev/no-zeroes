@@ -1,0 +1,19 @@
+@use '@/styles/base/flex' as *;
+
+.step {
+    @include flex-center-column(var(--gap-4));
+    text-align: center;
+
+    & .actions {
+        @include flex-center-column(var(--gap-8));
+    }
+
+    & .navRow {
+        margin-top: var(--margin-5);
+    }
+}
+
+ .footer {
+    @include flex-center-column(var(--gap-8));
+    flex-direction: column-reverse;
+}

@@ -3,13 +3,12 @@
 
 .wrap {
 @include flex-center-column(var(--gap-6));
-
-& .step {
-    @include flex-center-column(var(--gap-4));
-    text-align: center;
-
-    & .actions {
-        @include flex-center-column(var(--gap-8));
-    }
+overflow-x: hidden;
 }
+
+.animWrap {
+  position: relative;
+  width: 100%;
+  min-height: 220px; // enough to prevent collapse during absolute positioning
+  overflow-x: hidden;
 }
