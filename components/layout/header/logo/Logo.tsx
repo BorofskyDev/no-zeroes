@@ -1,12 +1,13 @@
-import Link from 'next/link'
+
+import { TextLink } from '@/components/ui'
 import styles from './Logo.module.scss'
 
 export function Logo() {
   return (
     <div className={styles.logo}>
-      <Link href='/' className={styles.logoLink}>
+      <TextLink href='/' >
         N0
-      </Link>
+      </TextLink>
     </div>
   )
 }

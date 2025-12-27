@@ -1,4 +1,6 @@
 // app/api/auth/sync/route.ts
+export const runtime = 'nodejs'
+
 import { NextResponse } from 'next/server'
 import { adminAuth } from '@/lib/firebase/admin'
 import { prisma } from '@/lib/prisma'
@@ -7,6 +9,7 @@ export async function POST(req: Request) {
   try {
     const authHeader =
       req.headers.get('authorization') || req.headers.get('Authorization')
+
     if (!authHeader?.startsWith('Bearer ')) {
       return NextResponse.json(
         { ok: false, error: 'Missing or invalid Authorization header' },
@@ -29,15 +32,8 @@ export async function POST(req: Request) {
 
     const user = await prisma.user.upsert({
       where: { firebaseUid },
-      create: {
-        firebaseUid,
-        email,
-        // role defaults to USER in schema; keep it that way
-      },
-      update: {
-        // Keep this light—don’t overwrite profile fields every login unless you want that behavior
-        ...(email ? { email } : {}),
-      },
+      create: { firebaseUid, email },
+      update: { ...(email ? { email } : {}) },
       select: {
         id: true,
         firebaseUid: true,
@@ -48,13 +44,25 @@ export async function POST(req: Request) {
       },
     })
 
-    return NextResponse.json({ ok: true, user })
+    return NextResponse.json({ ok: true, user }, { status: 200 })
   } catch (err: unknown) {
-    // Common cases:
-    // - auth/id-token-expired
-    // - auth/argument-error (malformed token)
-    // - auth/invalid-id-token
+    // Log the real error server-side so you can see it in the terminal
+    if (process.env.NODE_ENV !== 'production') {
+      console.error('[/api/auth/sync] Error:', err)
+    }
+
     const message = err instanceof Error ? err.message : 'Unknown error'
-    return NextResponse.json({ ok: false, error: message }, { status: 401 })
+
+    // Treat Firebase token problems as 401; everything else 500
+    const isAuthError =
+      typeof message === 'string' &&
+      (message.toLowerCase().includes('token') ||
+        message.toLowerCase().includes('auth/') ||
+        message.toLowerCase().includes('id token'))
+
+    return NextResponse.json(
+      { ok: false, error: message },
+      { status: isAuthError ? 401 : 500 }
+    )
   }
 }
